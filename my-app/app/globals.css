@@ -17,36 +17,49 @@ body {
 }
 
 .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-top : 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
 }
 
 .main_button_group {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .nav-link.active {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .footer {
-    background-color: #f8f9fa; /* 연한 회색 배경 */
-    padding: 20px;
-    font-size: 0.9rem;
-    color: #6c757d;
-    border-top: 1px solid #dee2e6;
-    margin-top: 50px;
-  }
-  
-  .footer a {
-    color: black;
-    text-decoration: none;
-  }
-  
-  .footer a:hover {
-    text-decoration: underline;
-  }
-  
+  background-color: #f8f9fa;
+  /* 연한 회색 배경 */
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #6c757d;
+  border-top: 1px solid #dee2e6;
+  margin-top: 50px;
+}
+
+.footer a {
+  color: black;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.main_button_group Button {
+  color: black;
+  background-color: rgb(238, 233, 233);
+  border: 1px solid white;
+  transition: all 0.2s ease-in-out;
+}
+
+.main_button_group Button:hover {
+  background-color: rgb(220, 220, 220); /* 원하는 hover 색상 */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+  color: black; /* 다시 명시해서 Bootstrap 파란 글자 덮어쓰기 */
+}

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Button, Image } from "react-bootstrap";
 
 export default function Home() {
@@ -7,8 +8,12 @@ export default function Home() {
       <hr></hr>
       <h3>잃어버린 기억을 찾도록 도와드립니다</h3>
       <div className="main_button_group">
-        <Button className="me-2">버튼1</Button>
-        <Button>버튼2</Button>
+        <Link href="/history" passHref>
+          <Button size="lg" className="me-2">검색 기록에서 찾아보기</Button>
+        </Link>
+        <Link href="/ai" passHref>
+          <Button size="lg">AI와 대화하며 찾아보기</Button>
+        </Link>
       </div>
     </div>
   );
