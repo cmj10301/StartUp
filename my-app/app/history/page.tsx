@@ -1,5 +1,5 @@
 export default function History() {
     return (
-        <h1>Hello List</h1>
+        <a href="https://lordicon.com/">Icons by Lordicon.com</a>
     )
 }
