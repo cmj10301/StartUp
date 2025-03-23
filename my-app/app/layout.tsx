@@ -1,6 +1,7 @@
 import './globals.css'
-import Navbar from './navbar';
+import Navbar from '../component/navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from '@/component/footer';
 
 export const metadata = {
   title: 'Next.js',
@@ -13,11 +14,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body>
-        <Navbar/>
-        {children}
+        <div className="page-wrapper">
+          <Navbar/>
+          <main className="main-content">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
-  )
+  );
 }
