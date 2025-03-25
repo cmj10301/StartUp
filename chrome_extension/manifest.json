@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Search History Mind Map",
+  "version": "1.0",
+  "description": "검색 기록을 가져와 마인드맵으로 표시하는 확장 프로그램",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "내 검색 기록 보기"
+  },
+  "permissions": [
+    "history",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "externally_connectable": {
+    "matches": ["https://localhost:3000/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://localhost:3000/history"],
+      "js": ["contentScript.js"]
+    }
+  ]
+}
