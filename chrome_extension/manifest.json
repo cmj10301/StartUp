@@ -9,20 +9,12 @@
   },
   "permissions": [
     "history",
-    "storage",
-    "activeTab",
-    "scripting"
+    "storage"
   ],
   "host_permissions": [
     "<all_urls>"
   ],
   "externally_connectable": {
     "matches": ["https://localhost:3000/*"]
-  },
-  "content_scripts": [
-    {
-      "matches": ["https://localhost:3000/history"],
-      "js": ["contentScript.js"]
-    }
-  ]
+  }
 }

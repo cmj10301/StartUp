@@ -40,10 +40,10 @@ export default function History() {
       <br />
       <h3>검색 기록으로 유추하기</h3>
       <div className="main_button_group">
-        <Button size="lg" onClick={() => alert('기능 준비 중')}>
+        {/* <Button size="lg" onClick={() => alert('기능 준비 중')}>
           시작하기
-        </Button>
-        <MindMap/>
+        </Button> */}
+        { historyData.length > 0 ? <MindMap /> : <p>아직 검색 기록이 전송되지 않았습니다.</p>}
       </div>
       <hr />
       <h5>최근 검색 기록:</h5>
