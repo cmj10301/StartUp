@@ -1,9 +1,19 @@
 // popup.js
 
-// 전역 변수에 검색 기록 데이터를 저장
 let searchHistoryData = [];
 
-// '검색 기록 가져오기' 버튼 클릭 이벤트
+// 초기 실행 시 동의 여부 확인
+chrome.storage.sync.get(['agreedToHistoryAccess'], (result) => {
+  const agreed = result.agreedToHistoryAccess;
+  updateUI(agreed);
+});
+
+document.getElementById("agreeBtn").addEventListener("click", () => {
+  chrome.storage.sync.set({ agreedToHistoryAccess: true }, () => {
+    updateUI(true);
+  });
+});
+
 document.getElementById("fetchHistoryBtn").addEventListener("click", () => {
   const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
   chrome.history.search(
@@ -16,31 +26,51 @@ document.getElementById("fetchHistoryBtn").addEventListener("click", () => {
   );
 });
 
-// '내 웹페이지로 보내기' 버튼 클릭 이벤트
 document.getElementById("sendDataBtn").addEventListener("click", () => {
   if (!searchHistoryData.length) {
     alert("먼저 검색 기록을 가져와 주세요.");
     return;
   }
-  sendDataToServer(searchHistoryData);
-});
 
-function sendDataToServer(data) {
   fetch('http://localhost:3000/api/saveSearchHistory', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(searchHistoryData),
   })
-
-    .then(response => response.json())
+    .then(res => res.json())
     .then(result => {
-      console.log('서버 응답:', result);
-      alert('데이터가 성공적으로 전송되었습니다!');
+      console.log("서버 응답:", result);
+      alert("데이터가 성공적으로 전송되었습니다!");
+
+      chrome.tabs.query({}, (tabs) => {
+        const targetTab = tabs.find(tab =>
+          tab.url && tab.url.includes('/history')
+        );
+
+        if (targetTab && targetTab.id) {
+          chrome.tabs.reload(targetTab.id);
+        }
+      });
     })
-    .catch(error => {
-      console.error('데이터 전송 중 오류 발생:', error);
-      alert('데이터 전송에 실패하였습니다.');
+    .catch(err => {
+      console.error("전송 오류:", err);
+      alert("전송에 실패했습니다.")
     });
+});
+
+
+function updateUI(agreed) {
+  const statusText = document.getElementById("statusText");
+  const fetchBtn = document.getElementById("fetchHistoryBtn");
+  const sendBtn = document.getElementById("sendDataBtn");
+
+  if (agreed) {
+    statusText.textContent = "✔ 검색 기록 수집에 동의하셨습니다.";
+    fetchBtn.disabled = false;
+    sendBtn.disabled = false;
+  } else {
+    statusText.textContent = "❗ 검색 기록 수집에 동의하지 않으셨습니다.";
+    fetchBtn.disabled = true;
+    sendBtn.disabled = true;
+  }
 }
